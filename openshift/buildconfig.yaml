@@ -1,0 +1,26 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: cassandra-build
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'cassandra:latest'
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    git:
+      uri: 'https://github.com/schen1/cassandra-openshift'
+    type: Git
+  strategy:
+    dockerStrategy:
+      env:
+        - name: CASSANDRA_VERSION
+          value: 3.11.4
+      pullSecret:
+        name: pull-secret
+    type: Docker
+  triggers: []
